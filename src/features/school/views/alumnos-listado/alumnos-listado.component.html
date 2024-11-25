@@ -1,0 +1,54 @@
+<dx-data-grid 
+    #dxAlumnos
+    [dataSource]="alumnos$ | async" noDataText="No hay información disponible" 
+    keyExpr="id"
+    (onRowInserting)="onInserting($event)" (onRowRemoving)="onDeleting($event)" (onRowUpdating)="onUpdating($event)">
+ 
+  <dxi-column
+    caption="Código"
+    dataField="id"
+    [allowEditing]="false"
+  ></dxi-column>
+  <dxi-column caption="Nombres" dataField="nombre"></dxi-column>
+  <dxi-column caption="Apellidos" dataField="apellidos"></dxi-column>
+  <dxi-column caption="Genero" dataField="genero">
+    <dxo-lookup
+      [dataSource]="generos"
+      valueExpr="abreviacion"
+      displayExpr="nombre"
+    ></dxo-lookup>
+  </dxi-column>
+  <dxi-column
+    caption="Fecha de nacimiento"
+    dataField="fechaNacimiento"
+    dataType="date"
+  ></dxi-column>
+
+  <dxi-column type="buttons" caption="Acciones" width="150px">
+    <dxi-button name="edit" text="Editar"></dxi-button>
+    <dxi-button name="cancel" text="Cancelar"></dxi-button>
+    <dxi-button name="save" text="Guardar"></dxi-button>
+    <dxi-button name="delete" text="Eliminar"></dxi-button>
+  </dxi-column>
+
+  <dxo-editing [enabled]="true" mode="row" [allowAdding]="true" [allowDeleting]="true" [allowUpdating]="true" [confirmDelete]="false">
+  </dxo-editing>
+
+  <dxo-toolbar [visible]="true">
+    <dxi-item
+      name="addRowButton"
+      showText="always"
+      [options]="{ text: 'Agregar alumno' }"
+    ></dxi-item>
+    <dxi-item
+      name="saveButton"
+      showText="always"
+      [options]="{ text: 'Guadar cambios' }"
+    ></dxi-item>
+    <dxi-item
+      name="revertButton"
+      showText="always"
+      [options]="{ text: 'Revertir cambios' }"
+    ></dxi-item>
+  </dxo-toolbar>
+</dx-data-grid>
